@@ -84,7 +84,7 @@ async function sendMessage() {
   createTyping();
 
   try {
-    const response = await fetch("http://127.0.0.1:8000/chat", {
+    const response = await fetch("https://lahari-portfolio-backend.onrender.com", {
       method: "POST",
 
       headers: {
