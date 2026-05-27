@@ -1,0 +1,1344 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Experience | Lahari M</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="chatbot/chatbot.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: #050816;
+        color: white;
+        font-family: "Inter", sans-serif;
+        overflow-x: hidden;
+      }
+
+      /* CURSOR */
+
+      /* BACKGROUND */
+
+      canvas {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+      }
+
+      .grid {
+        position: fixed;
+        inset: 0;
+
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+
+        background-size: 60px 60px;
+
+        mask-image: radial-gradient(
+          circle at center,
+          black 30%,
+          transparent 90%
+        );
+
+        z-index: -1;
+      }
+
+      .glow {
+        position: fixed;
+
+        width: 500px;
+        height: 500px;
+
+        background: radial-gradient(
+          circle,
+          rgba(0, 140, 255, 0.16),
+          transparent 70%
+        );
+
+        filter: blur(50px);
+
+        top: 50%;
+        left: 50%;
+
+        transform: translate(-50%, -50%);
+
+        z-index: -1;
+
+        animation: pulse 6s infinite ease-in-out;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+
+        50% {
+          transform: translate(-50%, -50%) scale(1.15);
+        }
+      }
+
+      /* NAVBAR */
+
+      nav {
+        position: fixed;
+
+        top: 18px;
+        left: 50%;
+
+        transform: translateX(-50%);
+
+        width: 94%;
+        max-width: 1300px;
+
+        padding: 14px 24px;
+
+        border-radius: 20px;
+
+        background: rgba(255, 255, 255, 0.04);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        backdrop-filter: blur(20px);
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        z-index: 1000;
+      }
+
+      .logo {
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 24px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: #94a3b8;
+        font-size: 14px;
+        transition: 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: white;
+      }
+
+      .active {
+        color: white !important;
+      }
+
+      /* MAIN */
+
+      .main-layout {
+        width: 100%;
+
+        padding: 120px 4% 50px;
+
+        display: grid;
+
+        grid-template-columns: 280px 1fr;
+
+        gap: 24px;
+      }
+
+      /* SIDEBAR */
+
+      .sidebar {
+        position: sticky;
+        top: 110px;
+        height: fit-content;
+      }
+
+      .experience-mini {
+        background: rgba(255, 255, 255, 0.04);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        border-radius: 22px;
+
+        padding: 20px;
+
+        backdrop-filter: blur(20px);
+      }
+
+      .mini-role {
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+      }
+
+      .mini-company {
+        color: #7dd3fc;
+        font-size: 13px;
+        margin-bottom: 10px;
+      }
+
+      .mini-desc {
+        color: #94a3b8;
+        line-height: 1.7;
+        font-size: 13px;
+        margin-bottom: 16px;
+      }
+
+      .mini-time {
+        color: #64748b;
+        font-size: 12px;
+        margin-bottom: 18px;
+      }
+
+      .sidebar-buttons {
+        display: flex;
+        gap: 10px;
+      }
+
+      .switch-btn {
+        flex: 1;
+
+        padding: 11px;
+
+        border-radius: 12px;
+
+        background: rgba(255, 255, 255, 0.05);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        color: white;
+
+        font-size: 13px;
+
+        transition: 0.3s;
+      }
+
+      .primary-switch {
+        background: rgba(0, 140, 255, 0.12);
+        border-color: rgba(125, 211, 252, 0.2);
+      }
+
+      /* CONTENT */
+
+      .content {
+        width: 100%;
+        max-width: 1000px;
+      }
+
+      /* HERO */
+
+      .hero-card {
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid rgba(255, 255, 255, 0.06);
+
+        border-radius: 24px;
+
+        padding: 28px;
+
+        backdrop-filter: blur(20px);
+
+        margin-bottom: 38px;
+      }
+
+      .section-label {
+        color: #7dd3fc;
+
+        font-size: 11px;
+
+        letter-spacing: 3px;
+
+        margin-bottom: 14px;
+      }
+
+      .section-title {
+        font-size: 2rem;
+
+        line-height: 1.15;
+
+        margin-bottom: 16px;
+
+        background: linear-gradient(to right, #ffffff, #7dd3fc);
+
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .section-desc {
+        color: #94a3b8;
+
+        line-height: 1.9;
+
+        font-size: 14px;
+      }
+
+      /* METRICS */
+
+      .metrics {
+        display: flex;
+
+        gap: 10px;
+
+        flex-wrap: wrap;
+
+        margin-top: 22px;
+      }
+
+      .metric {
+        padding: 10px 14px;
+
+        border-radius: 999px;
+
+        background: rgba(0, 140, 255, 0.08);
+
+        border: 1px solid rgba(125, 211, 252, 0.14);
+
+        font-size: 12px;
+
+        color: #dbeafe;
+      }
+
+      /* TOGGLE */
+
+      .role-section {
+        display: block;
+      }
+
+      .story-section {
+        display: none;
+      }
+
+      /* BLOCKS */
+
+      .story-block {
+        display: grid;
+
+        grid-template-columns: 1fr 280px;
+
+        gap: 22px;
+
+        align-items: center;
+
+        margin-bottom: 32px;
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid rgba(255, 255, 255, 0.06);
+
+        border-radius: 22px;
+
+        padding: 22px;
+      }
+
+      .story-text {
+        color: #94a3b8;
+
+        line-height: 1.9;
+
+        font-size: 13px;
+      }
+
+      /* IMAGE */
+
+      .image-card {
+        height: 220px;
+
+        border-radius: 20px;
+
+        overflow: hidden;
+
+        position: relative;
+
+        background: linear-gradient(
+          135deg,
+          rgba(0, 140, 255, 0.2),
+          rgba(15, 23, 42, 0.85)
+        );
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        text-align: center;
+
+        padding: 18px;
+
+        font-size: 13px;
+
+        color: #dbeafe;
+      }
+
+      .image-overlay {
+        position: absolute;
+
+        inset: 0;
+
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+      }
+
+      .image-title {
+        position: absolute;
+
+        bottom: 16px;
+        left: 16px;
+
+        font-size: 12px;
+
+        z-index: 2;
+      }
+
+      /* OWNERSHIP */
+
+      .ownership {
+        background: rgba(0, 140, 255, 0.06);
+
+        border: 1px solid rgba(125, 211, 252, 0.14);
+
+        border-radius: 22px;
+
+        padding: 24px;
+
+        margin-bottom: 34px;
+      }
+
+      .ownership p {
+        color: #dbeafe;
+
+        line-height: 1.9;
+
+        font-size: 13px;
+      }
+
+      /* EXECUTION */
+
+      .execution-block {
+        display: grid;
+
+        grid-template-columns: 1fr 280px;
+
+        gap: 22px;
+
+        align-items: center;
+
+        margin-bottom: 24px;
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid rgba(255, 255, 255, 0.06);
+
+        border-radius: 22px;
+
+        padding: 22px;
+      }
+
+      .execution-block.reverse {
+        grid-template-columns: 280px 1fr;
+      }
+
+      .execution-content h3 {
+        color: #7dd3fc;
+
+        margin-bottom: 14px;
+
+        font-size: 15px;
+      }
+
+      .execution-content p {
+        color: #94a3b8;
+
+        line-height: 1.9;
+
+        font-size: 13px;
+      }
+
+      /* TIMELINE */
+
+      .timeline {
+        position: relative;
+
+        padding-left: 28px;
+      }
+
+      .timeline::before {
+        content: "";
+
+        position: absolute;
+
+        left: 7px;
+        top: 0;
+
+        width: 2px;
+        height: 100%;
+
+        background: linear-gradient(
+          to bottom,
+          rgba(125, 211, 252, 0.5),
+          transparent
+        );
+      }
+
+      .timeline-card {
+        position: relative;
+
+        margin-bottom: 24px;
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid rgba(255, 255, 255, 0.06);
+
+        border-radius: 22px;
+
+        padding: 22px;
+
+        display: grid;
+
+        grid-template-columns: 1fr 240px;
+
+        gap: 18px;
+
+        align-items: center;
+      }
+
+      .timeline-dot {
+        position: absolute;
+
+        left: -25px;
+        top: 28px;
+
+        width: 12px;
+        height: 12px;
+
+        border-radius: 50%;
+
+        background: #7dd3fc;
+
+        box-shadow: 0 0 16px rgba(125, 211, 252, 0.7);
+      }
+
+      .timeline-period {
+        color: #7dd3fc;
+
+        font-size: 11px;
+
+        letter-spacing: 2px;
+
+        margin-bottom: 10px;
+      }
+
+      .timeline-title {
+        font-size: 1.1rem;
+
+        margin-bottom: 12px;
+      }
+
+      .timeline-desc {
+        color: #94a3b8;
+
+        line-height: 1.8;
+
+        font-size: 13px;
+      }
+
+      /* GALLERY */
+
+      .gallery-grid {
+        display: grid;
+
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 16px;
+
+        margin-top: 22px;
+      }
+
+      .gallery-item {
+        height: 210px;
+
+        border-radius: 20px;
+
+        overflow: hidden;
+
+        position: relative;
+
+        background: linear-gradient(
+          135deg,
+          rgba(0, 140, 255, 0.18),
+          rgba(15, 23, 42, 0.85)
+        );
+
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .gallery-content {
+        position: absolute;
+
+        inset: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 18px;
+
+        text-align: center;
+
+        font-size: 13px;
+
+        color: #dbeafe;
+      }
+
+      .gallery-caption {
+        position: absolute;
+
+        bottom: 0;
+        left: 0;
+
+        width: 100%;
+
+        padding: 14px;
+
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+
+        font-size: 12px;
+      }
+
+      /* CAROUSEL */
+
+      .carousel {
+        display: flex;
+
+        gap: 16px;
+
+        overflow-x: auto;
+
+        padding-bottom: 8px;
+      }
+
+      .carousel::-webkit-scrollbar {
+        height: 6px;
+      }
+
+      .carousel::-webkit-scrollbar-thumb {
+        background: rgba(125, 211, 252, 0.3);
+        border-radius: 10px;
+      }
+
+      .doc-card {
+        min-width: 280px;
+
+        height: 220px;
+
+        border-radius: 20px;
+
+        overflow: hidden;
+
+        position: relative;
+
+        background: linear-gradient(
+          135deg,
+          rgba(0, 140, 255, 0.18),
+          rgba(15, 23, 42, 0.85)
+        );
+
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .doc-content {
+        position: absolute;
+
+        inset: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 18px;
+
+        text-align: center;
+
+        font-size: 13px;
+
+        color: #dbeafe;
+      }
+
+      .doc-caption {
+        position: absolute;
+
+        bottom: 0;
+        left: 0;
+
+        width: 100%;
+
+        padding: 14px;
+
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+
+        font-size: 12px;
+      }
+
+      /* MOBILE */
+
+      @media (max-width: 1100px) {
+        .main-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          position: relative;
+          top: 0;
+        }
+
+        .content {
+          max-width: 100%;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .story-block,
+        .execution-block,
+        .execution-block.reverse,
+        .timeline-card {
+          grid-template-columns: 1fr;
+        }
+
+        .gallery-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        nav {
+          padding: 14px 18px;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .main-layout {
+          padding: 110px 4% 40px;
+        }
+
+        .hero-card {
+          padding: 22px;
+        }
+
+        .section-title {
+          font-size: 1.6rem;
+        }
+
+        .story-block,
+        .execution-block,
+        .timeline-card {
+          padding: 18px;
+        }
+
+        .timeline {
+          padding-left: 20px;
+        }
+
+        .timeline-dot {
+          left: -17px;
+        }
+
+        .gallery-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .image-card {
+          height: 190px;
+        }
+
+        .doc-card {
+          min-width: 240px;
+          height: 190px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <canvas id="particles"></canvas>
+
+    <div class="grid"></div>
+    <div class="glow"></div>
+
+    <!-- NAVBAR -->
+
+    <nav>
+      <div class="logo">LAHARI M</div>
+
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="experience.html" class="active">Experience</a>
+        <a href="achievements.html">Achievements</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </nav>
+
+    <!-- MAIN -->
+
+    <section class="main-layout">
+      <!-- SIDEBAR -->
+
+      <aside class="sidebar">
+        <div class="experience-mini">
+          <h2 class="mini-role">Backend Engineer Intern</h2>
+
+          <div class="mini-company">Bala Bhavan Govt. Cultural School</div>
+
+          <p class="mini-desc">
+            Built async AI workflows, retrieval infrastructure, and backend
+            systems for institutional archival management.
+          </p>
+
+          <div class="mini-time">May 2026 — Present</div>
+
+          <div class="sidebar-buttons">
+            <button class="switch-btn primary-switch" id="roleBtn">
+              My Role
+            </button>
+
+            <button class="switch-btn" id="storyBtn">Workplace</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- CONTENT -->
+
+      <div class="content">
+        <!-- ROLE -->
+
+        <div class="role-section" id="roleSection">
+          <div class="hero-card">
+            <div class="section-label">ENGINEERING ROLE</div>
+
+            <h1 class="section-title">
+              Building async backend infrastructure for AI-powered archival
+              systems.
+            </h1>
+
+            <p class="section-desc">
+              Worked as the primary backend engineer responsible for async
+              ingestion workflows, retrieval infrastructure, deployment
+              pipelines, and operational backend execution.
+            </p>
+
+            <div class="metrics">
+              <div class="metric">&lt;50ms enqueue</div>
+
+              <div class="metric">Redis workflows</div>
+
+              <div class="metric">Async AI pipelines</div>
+
+              <div class="metric">FAISS retrieval</div>
+            </div>
+          </div>
+
+          <!-- OWNERSHIP -->
+
+          <div class="ownership">
+            <div class="section-label">ENGINEERING OWNERSHIP</div>
+
+            <p>
+              Worked as the primary backend engineer responsible for designing
+              API architecture, queue workflows, retrieval infrastructure,
+              deployment pipelines, and operational backend execution.
+
+              <br /><br />
+
+              The role involved independent debugging, deployment management,
+              CI/CD monitoring, and maintaining async workflow continuity.
+            </p>
+          </div>
+
+          <!-- EXECUTION -->
+
+          <div class="execution-block">
+            <div class="execution-content">
+              <h3>Backend API Infrastructure</h3>
+
+              <p>
+                Designed JWT-authenticated APIs, normalized PostgreSQL schema,
+                audit logging systems, and media workflows for archival
+                management.
+              </p>
+            </div>
+
+            <div class="image-card">
+              <div class="image-overlay"></div>
+
+              <div class="image-title">Backend Dashboard</div>
+
+              Insert API Screenshot
+            </div>
+          </div>
+
+          <div class="execution-block reverse">
+            <div class="image-card">
+              <div class="image-overlay"></div>
+
+              <div class="image-title">Redis Worker Logs</div>
+
+              Insert Worker Screenshot
+            </div>
+
+            <div class="execution-content">
+              <h3>Async Queue Processing</h3>
+
+              <p>
+                Built Redis queue-driven workers separating AI summarization,
+                embedding creation, and indexing from the request lifecycle.
+              </p>
+            </div>
+          </div>
+
+          <div class="execution-block">
+            <div class="execution-content">
+              <h3>Retrieval Infrastructure</h3>
+
+              <p>
+                Implemented semantic retrieval workflows using embeddings, FAISS
+                indexing, metadata filtering, and recency-aware ranking.
+              </p>
+            </div>
+
+            <div class="image-card">
+              <div class="image-overlay"></div>
+
+              <div class="image-title">Semantic Search</div>
+
+              Insert Retrieval Screenshot
+            </div>
+          </div>
+
+          <!-- GALLERY -->
+
+          <div class="hero-card">
+            <div class="section-label">ENGINEERING SNAPSHOTS</div>
+
+            <div class="gallery-grid">
+              <div class="gallery-item">
+                <div class="gallery-content">Insert Backend Screenshot</div>
+
+                <div class="gallery-caption">Archive dashboard</div>
+              </div>
+
+              <div class="gallery-item">
+                <div class="gallery-content">Insert CI/CD Screenshot</div>
+
+                <div class="gallery-caption">GitHub Actions deployment</div>
+              </div>
+
+              <div class="gallery-item">
+                <div class="gallery-content">Insert Terminal Screenshot</div>
+
+                <div class="gallery-caption">Worker processing logs</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STORY -->
+
+        <div class="story-section" id="storySection">
+          <div class="hero-card">
+            <div class="section-label">WORKPLACE EXPERIENCE</div>
+
+            <h1 class="section-title">
+              From a student portfolio to building systems used inside a real
+              institution.
+            </h1>
+
+            <p class="section-desc">
+              A journey through backend engineering, async infrastructure,
+              retrieval systems, and deployment ownership.
+            </p>
+          </div>
+
+          <!-- STORY BLOCK -->
+
+          <div class="story-block">
+            <div class="story-text">
+              Bala Bhavan Government Cultural School focuses on preserving
+              student activities, cultural programs, performances, and
+              institutional records.
+
+              <br /><br />
+
+              Initially, the requirement was only about improving digital
+              archival workflows.
+
+              <br /><br />
+
+              But over time, the challenge evolved into building a backend
+              system capable of managing uploads, AI summarization, semantic
+              retrieval, and scalable archival infrastructure.
+            </div>
+
+            <div class="image-card">
+              <div class="image-overlay"></div>
+
+              <div class="image-title">School / Campus</div>
+
+              Insert School Image
+            </div>
+          </div>
+
+          <!-- HOW GOT INVOLVED -->
+
+          <div class="ownership">
+            <div class="section-label">HOW I GOT INVOLVED</div>
+
+            <p>
+              The opportunity started through discussions around building a
+              better archival management system.
+
+              <br /><br />
+
+              As the project expanded, I gradually started handling backend
+              responsibilities independently including APIs, queue
+              orchestration, semantic retrieval, and deployment workflows.
+            </p>
+          </div>
+
+          <!-- TIMELINE -->
+
+          <div class="timeline">
+            <!-- CARD -->
+
+            <div class="timeline-card">
+              <div class="timeline-dot"></div>
+
+              <div>
+                <div class="timeline-period">INITIAL PHASE</div>
+
+                <h3 class="timeline-title">Understanding archival workflows</h3>
+
+                <p class="timeline-desc">
+                  Early work focused on understanding how event media, photos,
+                  and institutional records were being managed manually.
+                </p>
+              </div>
+
+              <div class="image-card">
+                <div class="image-overlay"></div>
+
+                <div class="image-title">Institutional Workflow</div>
+
+                Insert Workflow Screenshot
+              </div>
+            </div>
+
+            <!-- CARD -->
+
+            <div class="timeline-card">
+              <div class="timeline-dot"></div>
+
+              <div>
+                <div class="timeline-period">BACKEND DEVELOPMENT</div>
+
+                <h3 class="timeline-title">Building async backend systems</h3>
+
+                <p class="timeline-desc">
+                  Designed PostgreSQL schema, JWT APIs, Redis queues, and worker
+                  systems to separate AI processing from request handling.
+                </p>
+              </div>
+
+              <div class="image-card">
+                <div class="image-overlay"></div>
+
+                <div class="image-title">Redis Workers</div>
+
+                Insert Worker Logs
+              </div>
+            </div>
+
+            <!-- CARD -->
+
+            <div class="timeline-card">
+              <div class="timeline-dot"></div>
+
+              <div>
+                <div class="timeline-period">AI & RETRIEVAL</div>
+
+                <h3 class="timeline-title">Implementing semantic retrieval</h3>
+
+                <p class="timeline-desc">
+                  The platform evolved into an AI-assisted retrieval system
+                  using LangChain summarization, embeddings, and FAISS indexing.
+                </p>
+              </div>
+
+              <div class="image-card">
+                <div class="image-overlay"></div>
+
+                <div class="image-title">Retrieval System</div>
+
+                Insert Retrieval Screenshot
+              </div>
+            </div>
+
+            <!-- CARD -->
+
+            <div class="timeline-card">
+              <div class="timeline-dot"></div>
+
+              <div>
+                <div class="timeline-period">DEPLOYMENT</div>
+
+                <h3 class="timeline-title">Managing deployment workflows</h3>
+
+                <p class="timeline-desc">
+                  Final stages focused on Docker deployment, Linux VPS hosting,
+                  Nginx configuration, and GitHub Actions CI/CD automation.
+                </p>
+              </div>
+
+              <div class="image-card">
+                <div class="image-overlay"></div>
+
+                <div class="image-title">Deployment Infrastructure</div>
+
+                Insert Deployment Screenshot
+              </div>
+            </div>
+          </div>
+
+          <!-- DOCUMENTS -->
+
+          <div class="hero-card" style="margin-top: 34px">
+            <div class="section-label">OFFICIAL RECOGNITION</div>
+
+            <div class="carousel">
+              <div class="doc-card">
+                <div class="doc-content">Insert Offer Letter</div>
+
+                <div class="doc-caption">Internship offer letter</div>
+              </div>
+
+              <div class="doc-card">
+                <div class="doc-content">Insert Internship Certificate</div>
+
+                <div class="doc-caption">Internship certificate</div>
+              </div>
+
+              <div class="doc-card">
+                <div class="doc-content">Insert Appreciation Letter</div>
+
+                <div class="doc-caption">Institutional appreciation</div>
+              </div>
+
+              <div class="doc-card">
+                <div class="doc-content">Insert Deployment Screenshot</div>
+
+                <div class="doc-caption">Production deployment proof</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      /* TOGGLE */
+
+      const roleBtn = document.getElementById("roleBtn");
+      const storyBtn = document.getElementById("storyBtn");
+
+      const roleSection = document.getElementById("roleSection");
+      const storySection = document.getElementById("storySection");
+
+      roleBtn.onclick = () => {
+        roleSection.style.display = "block";
+        storySection.style.display = "none";
+
+        roleBtn.classList.add("primary-switch");
+        storyBtn.classList.remove("primary-switch");
+      };
+
+      storyBtn.onclick = () => {
+        roleSection.style.display = "none";
+        storySection.style.display = "block";
+
+        storyBtn.classList.add("primary-switch");
+        roleBtn.classList.remove("primary-switch");
+      };
+
+      /* PARTICLES */
+
+      const canvas = document.getElementById("particles");
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      let particlesArray = [];
+
+      class Particle {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+
+          this.size = Math.random() * 2;
+
+          this.speedX = (Math.random() - 0.5) * 0.25;
+          this.speedY = (Math.random() - 0.5) * 0.25;
+        }
+
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+
+          if (this.x > canvas.width) this.x = 0;
+          if (this.x < 0) this.x = canvas.width;
+
+          if (this.y > canvas.height) this.y = 0;
+          if (this.y < 0) this.y = canvas.height;
+        }
+
+        draw() {
+          ctx.fillStyle = "rgba(125,211,252,0.7)";
+
+          ctx.beginPath();
+
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+
+          ctx.fill();
+        }
+      }
+
+      function init() {
+        particlesArray = [];
+
+        for (let i = 0; i < 60; i++) {
+          particlesArray.push(new Particle());
+        }
+      }
+
+      function connectParticles() {
+        for (let a = 0; a < particlesArray.length; a++) {
+          for (let b = a; b < particlesArray.length; b++) {
+            let dx = particlesArray[a].x - particlesArray[b].x;
+            let dy = particlesArray[a].y - particlesArray[b].y;
+
+            let distance = dx * dx + dy * dy;
+
+            if (distance < 10000) {
+              ctx.strokeStyle = "rgba(125,211,252,0.04)";
+
+              ctx.lineWidth = 1;
+
+              ctx.beginPath();
+
+              ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+
+              ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+
+              ctx.stroke();
+            }
+          }
+        }
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        particlesArray.forEach((particle) => {
+          particle.update();
+          particle.draw();
+        });
+
+        connectParticles();
+
+        requestAnimationFrame(animate);
+      }
+
+      init();
+      animate();
+
+      /* CURSOR */
+    </script>
+    <!-- CHATBOT -->
+
+    <div id="chatbot-container"></div>
+
+    <script>
+      fetch("chatbot/chatbot.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("chatbot-container").innerHTML = data;
+
+          const script = document.createElement("script");
+
+          script.src = "chatbot/chatbot.js";
+
+          document.body.appendChild(script);
+        });
+    </script>
+    <script>
+      /* SESSION ID */
+
+      let sessionId = localStorage.getItem("session_id");
+
+      if (!sessionId) {
+        sessionId = Math.random().toString(36).substring(2);
+
+        localStorage.setItem("session_id", sessionId);
+      }
+
+      /* START TIME */
+
+      const startTime = Date.now();
+
+      /* SEND ANALYTICS */
+
+      window.addEventListener("beforeunload", async () => {
+        const duration = Math.floor((Date.now() - startTime) / 1000);
+
+        await fetch("http://127.0.0.1:8000/track", {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            session_id: sessionId,
+
+            page: "home",
+
+            duration: `${duration}s`,
+
+            device: navigator.userAgent,
+
+            country: "unknown",
+          }),
+        });
+      });
+    </script>
+  </body>
+</html>

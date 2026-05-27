@@ -1,0 +1,512 @@
+LAHARI M
+
+Backend Engineer focused on:
+- async systems
+- workflow orchestration
+- AI infrastructure
+- retrieval systems
+- reliability engineering
+- queue-based backend architectures
+
+Education:
+B.Tech CSE (AI & ML)
+Sanskriti University
+2023–2027
+CGPA: 7.8
+
+Expected Graduation Year:
+2027
+
+Location:
+India
+
+Current Focus:
+- Async workflow orchestration
+- Retrieval infrastructure
+- AI backend systems
+- Redis queue architectures
+- Semantic retrieval
+- Production backend engineering
+- Workflow-driven systems
+- Reliability-focused backend infrastructure
+
+==================================================
+CORE TECHNICAL SKILLS
+==================================================
+
+Languages:
+- Python
+- SQL
+
+Backend:
+- FastAPI
+- SQLAlchemy
+- REST APIs
+- JWT Authentication
+- WebSockets
+- Async Python
+
+Databases:
+- PostgreSQL
+- Redis
+
+AI / GenAI:
+- LangChain
+- FAISS
+- sentence-transformers
+- RAG pipelines
+- embedding systems
+- structured LLM outputs
+- Groq Llama 3.3 70B
+
+Infrastructure:
+- Docker
+- Nginx
+- GitHub Actions
+- Linux VPS deployment
+
+Reliability Engineering:
+- Circuit breakers
+- Dead Letter Queues
+- FSM workflows
+- Retry policies
+- Exponential backoff
+- Idempotency keys
+- Queue isolation
+- Failure recovery systems
+
+==================================================
+ABOUT LAHARI
+==================================================
+
+Lahari M is a backend engineering student focused on
+building workflow-driven backend systems rather than
+simple CRUD applications.
+
+Her projects focus heavily on:
+- async processing
+- fault isolation
+- operational workflows
+- reliability engineering
+- distributed system concepts
+- retrieval infrastructure
+- AI-assisted backend systems
+
+She is particularly interested in:
+- backend infrastructure
+- async architectures
+- AI pipeline engineering
+- queue-based systems
+- workflow orchestration
+- production backend systems
+
+==================================================
+PROJECTS
+==================================================
+
+==================================================
+1. MEDROUTE
+==================================================
+
+Project Name:
+MedRoute — Async Emergency Routing System
+
+Category:
+Backend Infrastructure + AI Routing System
+
+Overview:
+MedRoute is an AI-assisted emergency routing system
+designed to coordinate emergency workflows,
+hospital discovery,
+AI triage,
+and async backend orchestration.
+
+The system focuses heavily on:
+- workflow continuity
+- fault isolation
+- rerouting systems
+- async workers
+- queue orchestration
+- reliability engineering
+
+Core Idea:
+Emergency workflows should continue operating
+even during:
+- API failures
+- hospital rejection
+- worker retries
+- LLM instability
+
+==================================================
+MEDROUTE ARCHITECTURE
+==================================================
+
+Workflow:
+
+Client Request
+↓
+FastAPI API Layer
+↓
+Redis Queue
+↓
+Background Worker
+↓
+AI Triage
+↓
+Hospital Discovery
+↓
+Hospital Ranking
+↓
+PostgreSQL Persistence
+
+Heavy AI and geo-processing workloads are isolated
+from the request lifecycle using async queue orchestration.
+
+==================================================
+MEDROUTE FEATURES
+==================================================
+
+Core Backend Features:
+- FastAPI backend architecture
+- Redis async queue system
+- Background workers
+- PostgreSQL persistence
+- Workflow state management
+- Hospital rerouting
+- Structured logging
+- Metrics endpoints
+
+AI Features:
+- Groq Llama 3.3 integration
+- Structured JSON outputs
+- AI triage system
+- Severity classification
+- Specialization matching
+- Rule-based fallback routing
+
+Reliability Features:
+- pybreaker circuit breaker
+- Retry policies
+- Exponential backoff
+- Dead Letter Queue (DLQ)
+- Idempotency keys
+- Failure isolation
+- Workflow recovery
+- Timeout protection
+
+Workflow Features:
+- FSM state machine
+- Guarded transitions
+- Hospital rejection handling
+- Automatic rerouting
+- Operational continuity
+
+Geo Features:
+- OpenStreetMap Overpass API
+- Hospital discovery
+- Geo-aware routing
+- Haversine distance calculation
+- Distance-based ranking
+
+==================================================
+MEDROUTE STATE MACHINE
+==================================================
+
+Workflow States:
+- CREATED
+- PROCESSING
+- MATCHED
+- SELECTED
+- ACCEPTED
+- REJECTED
+- FAILED
+
+Transitions:
+CREATED → PROCESSING
+PROCESSING → MATCHED
+MATCHED → SELECTED
+SELECTED → ACCEPTED
+SELECTED → REJECTED
+REJECTED → MATCHED
+PROCESSING → FAILED
+
+==================================================
+MEDROUTE RELIABILITY CONFIGS
+==================================================
+
+Circuit Breaker:
+- failure threshold = 3
+- cooldown = 30 seconds
+- half-open recovery enabled
+
+Retry System:
+- 3 retry attempts
+- exponential backoff
+
+Idempotency:
+- Redis TTL = 24 hours
+
+DLQ:
+- failed jobs moved to dead-letter queue
+- replay support available
+
+==================================================
+MEDROUTE OPERATIONAL THINKING
+==================================================
+
+The most important engineering concept in MedRoute is:
+
+workflow continuity.
+
+The system was intentionally designed so emergency
+routing continues operating even if:
+- AI fails
+- APIs fail
+- hospitals reject requests
+- retries occur
+- workers restart
+
+The project focuses more on:
+- orchestration
+- workflow management
+- fault tolerance
+than frontend features.
+
+==================================================
+MEDROUTE FUTURE VISION
+==================================================
+
+Future ideas being explored:
+- ambulance coordination
+- traffic-aware routing
+- emergency visibility systems
+- route synchronization
+- patient-ambulance meetup workflows
+- traffic signal coordination
+- emergency movement intelligence
+
+Core Vision:
+Patients often begin traveling toward hospitals
+using their own vehicles before ambulances arrive.
+
+MedRoute explores coordinated emergency movement
+where:
+- patient movement starts immediately
+- ambulance dispatch occurs simultaneously
+- meetup routing is coordinated dynamically
+- hospitals prepare before arrival
+
+==================================================
+2. DISTRIBUTED ARCHIVE PLATFORM
+==================================================
+
+Project Name:
+Distributed Archive Platform
+
+Category:
+Async AI Retrieval Infrastructure
+
+Overview:
+An async AI archival platform focused on:
+- semantic retrieval
+- embedding pipelines
+- async ingestion workflows
+- searchable archival systems
+
+==================================================
+ARCHITECTURE
+==================================================
+
+Upload
+↓
+FastAPI
+↓
+Redis Queue
+↓
+Background Worker
+↓
+LangChain Processing
+↓
+Embedding Generation
+↓
+FAISS Index Update
+↓
+PostgreSQL Persistence
+
+==================================================
+FEATURES
+==================================================
+
+- LangChain summarization
+- sentence-transformer embeddings
+- FAISS semantic search
+- Redis queue orchestration
+- Background worker pipelines
+- Retry handling
+- Structured logs
+- Metadata filtering
+- Docker deployment
+- GitHub Actions CI/CD
+
+==================================================
+ENGINEERING DECISIONS
+==================================================
+
+FAISS was chosen over ChromaDB because:
+- lower operational overhead
+- simpler deployment
+- fewer external dependencies
+- exact retrieval correctness
+
+==================================================
+INTERNSHIP EXPERIENCE
+==================================================
+
+Role:
+Backend Engineer Intern
+
+Organization:
+Bala Bhavan Govt. Cultural School
+
+Timeline:
+May 2026 — Present
+
+Work Mode:
+Remote
+
+==================================================
+ABOUT THE ORGANIZATION
+==================================================
+
+The institution manages:
+- cultural events
+- media records
+- archival content
+- historical event documentation
+- institutional activity records
+
+The backend system was needed to:
+- centralize archival workflows
+- support semantic retrieval
+- automate ingestion pipelines
+- improve historical content retrieval
+
+==================================================
+RESPONSIBILITIES
+==================================================
+
+Lahari worked as the primary backend engineer responsible for:
+- FastAPI backend systems
+- Redis queue orchestration
+- semantic retrieval infrastructure
+- embedding workflows
+- deployment automation
+- Docker infrastructure
+- CI/CD workflows
+- async worker execution
+- infrastructure debugging
+- operational backend execution
+
+==================================================
+REMOTE ENGINEERING EXECUTION
+==================================================
+
+The internship was executed remotely with independent ownership over:
+- backend architecture
+- deployment workflows
+- debugging
+- infrastructure execution
+- operational monitoring
+- async workflows
+- worker orchestration
+
+==================================================
+DEPLOYMENT STACK
+==================================================
+
+- Docker Compose
+- Linux VPS
+- Nginx reverse proxy
+- GitHub Actions CI/CD
+- environment-based secrets
+
+==================================================
+ACHIEVEMENTS
+==================================================
+
+- 2nd Prize — MedRoute, Tech Fest SPARK
+- TCS CodeVita Season 13 Rank 850
+- Smart India Hackathon Internal Finalist
+- Triwizardathon 1.0 Finalist
+- GeeksForGeeks University Rank #1
+
+==================================================
+ENGINEERING STRENGTHS
+==================================================
+
+Lahari's strongest engineering areas include:
+- async backend systems
+- workflow orchestration
+- reliability engineering
+- queue-driven architectures
+- retrieval infrastructure
+- operational backend execution
+- AI pipeline orchestration
+- failure handling systems
+
+==================================================
+WHAT MAKES HER DIFFERENT
+==================================================
+
+Unlike typical student projects focused only on CRUD,
+Lahari's work focuses on:
+- workflow-driven backend systems
+- async processing
+- failure recovery
+- operational reliability
+- distributed workflow concepts
+- backend orchestration
+- queue-based architectures
+
+Her strongest differentiator is:
+building backend systems around
+workflow continuity and fault isolation.
+
+==================================================
+INTERVIEW TALKING POINTS
+==================================================
+
+Topics Lahari can discuss deeply:
+- Redis queue orchestration
+- async worker architecture
+- workflow state machines
+- hospital rerouting systems
+- circuit breakers
+- retry handling
+- idempotency systems
+- semantic retrieval
+- FAISS indexing
+- deployment workflows
+- Docker infrastructure
+- operational logging
+- backend reliability engineering
+
+==================================================
+PREFERRED ROLES
+==================================================
+
+Interested Roles:
+- Backend Engineer
+- GenAI Backend Engineer
+- AI Infrastructure Engineer
+- Platform Engineer
+- Retrieval Infrastructure Engineer
+
+Preferred Work:
+- async systems
+- workflow orchestration
+- backend infrastructure
+- production systems
+- AI pipelines
+- retrieval systems
+- distributed backend workflows

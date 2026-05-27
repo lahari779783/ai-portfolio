@@ -1,0 +1,882 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>About | Lahari M</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="chatbot/chatbot.css" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: #050816;
+        color: white;
+        font-family: "Inter", sans-serif;
+        overflow-x: hidden;
+        min-height: 100vh;
+        position: relative;
+      }
+
+      /* BACKGROUND */
+
+      canvas {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+      }
+
+      .grid {
+        position: fixed;
+        inset: 0;
+
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+
+        background-size: 60px 60px;
+
+        mask-image: radial-gradient(
+          circle at center,
+          black 30%,
+          transparent 90%
+        );
+
+        z-index: -1;
+      }
+
+      .glow {
+        position: fixed;
+
+        width: 430px;
+        height: 430px;
+
+        background: radial-gradient(
+          circle,
+          rgba(0, 140, 255, 0.15),
+          transparent 70%
+        );
+
+        filter: blur(50px);
+
+        top: 50%;
+        left: 50%;
+
+        transform: translate(-50%, -50%);
+
+        z-index: -1;
+
+        animation: pulse 6s infinite ease-in-out;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+
+        50% {
+          transform: translate(-50%, -50%) scale(1.08);
+        }
+      }
+
+      /* NAVBAR */
+
+      nav {
+        position: fixed;
+
+        top: 10px;
+        left: 50%;
+
+        transform: translateX(-50%);
+
+        width: 92%;
+        max-width: 1180px;
+
+        height: 52px;
+
+        padding: 10px 20px;
+
+        border-radius: 16px;
+
+        background: rgba(255, 255, 255, 0.04);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        backdrop-filter: blur(20px);
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        z-index: 1000;
+      }
+
+      .logo {
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 18px;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: #94a3b8;
+        font-size: 12px;
+        transition: 0.3s;
+        position: relative;
+      }
+
+      .nav-links a:hover {
+        color: white;
+      }
+
+      .nav-links a::after {
+        content: "";
+
+        position: absolute;
+
+        left: 0;
+        bottom: -4px;
+
+        width: 0%;
+        height: 1px;
+
+        background: #7dd3fc;
+
+        transition: 0.3s;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      .active {
+        color: white !important;
+      }
+
+      /* MAIN */
+
+      .about-page {
+        width: 100%;
+        padding: 105px 6% 50px;
+      }
+
+      /* HERO */
+
+      .section-tag {
+        color: #7dd3fc;
+
+        font-size: 11px;
+
+        letter-spacing: 3px;
+
+        margin-bottom: 12px;
+      }
+
+      .main-title {
+        font-size: clamp(2rem, 4vw, 3.5rem);
+
+        line-height: 1.05;
+
+        max-width: 760px;
+
+        margin-bottom: 34px;
+
+        background: linear-gradient(to right, #ffffff, #7dd3fc);
+
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* TOP GRID */
+
+      .top-grid {
+        display: grid;
+
+        grid-template-columns: 1.2fr 0.8fr;
+
+        gap: 18px;
+
+        margin-bottom: 18px;
+      }
+
+      /* GLASS */
+
+      .glass-card {
+        background: rgba(255, 255, 255, 0.04);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        border-radius: 22px;
+
+        padding: 24px;
+
+        backdrop-filter: blur(18px);
+
+        transition: 0.3s;
+      }
+
+      .glass-card:hover {
+        transform: translateY(-5px);
+
+        border-color: rgba(125, 211, 252, 0.18);
+      }
+
+      /* LEFT */
+
+      .intro {
+        font-size: 1.15rem;
+
+        line-height: 1.5;
+
+        margin-bottom: 18px;
+
+        font-weight: 500;
+      }
+
+      .description {
+        color: #94a3b8;
+
+        line-height: 1.7;
+
+        font-size: 13px;
+
+        margin-bottom: 14px;
+      }
+
+      /* MINI POINTS */
+
+      .mini-points {
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 10px;
+
+        margin-bottom: 18px;
+      }
+
+      .mini-point {
+        padding: 12px;
+
+        border-radius: 12px;
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid rgba(255, 255, 255, 0.05);
+
+        font-size: 12px;
+
+        color: #dbeafe;
+
+        transition: 0.3s;
+      }
+
+      .mini-point:hover {
+        background: rgba(0, 140, 255, 0.08);
+
+        transform: translateY(-3px);
+      }
+
+      /* RIGHT */
+
+      .mini-title {
+        font-size: 11px;
+
+        letter-spacing: 2px;
+
+        color: #7dd3fc;
+
+        margin-bottom: 16px;
+      }
+
+      .skill-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .skill {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        padding: 12px;
+
+        border-radius: 12px;
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid rgba(255, 255, 255, 0.05);
+
+        transition: 0.3s;
+      }
+
+      .skill:hover {
+        background: rgba(0, 140, 255, 0.08);
+
+        transform: translateX(4px);
+      }
+
+      .skill span {
+        font-size: 12px;
+        color: #dbeafe;
+      }
+
+      .skill small {
+        font-size: 10px;
+        color: #7dd3fc;
+      }
+
+      /* METRICS */
+
+      .real-metrics {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .real-metric {
+        padding: 10px 12px;
+
+        border-radius: 10px;
+
+        background: rgba(0, 140, 255, 0.08);
+
+        border: 1px solid rgba(125, 211, 252, 0.12);
+
+        font-size: 11px;
+
+        color: #dbeafe;
+      }
+
+      /* BOTTOM GRID */
+
+      .bottom-grid {
+        display: grid;
+
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 18px;
+
+        margin-top: 18px;
+      }
+
+      .highlight-card {
+        background: rgba(255, 255, 255, 0.04);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        border-radius: 20px;
+
+        padding: 22px;
+
+        transition: 0.3s;
+      }
+
+      .highlight-card:hover {
+        transform: translateY(-5px);
+
+        border-color: rgba(125, 211, 252, 0.18);
+      }
+
+      .highlight-icon {
+        font-size: 1.5rem;
+        margin-bottom: 14px;
+      }
+
+      .highlight-title {
+        font-size: 1rem;
+        margin-bottom: 10px;
+      }
+
+      .highlight-text {
+        font-size: 12px;
+
+        line-height: 1.7;
+
+        color: #94a3b8;
+      }
+
+      /* STACK */
+
+      .stack-section {
+        margin-top: 20px;
+
+        padding: 22px;
+
+        border-radius: 20px;
+
+        background: rgba(255, 255, 255, 0.04);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .stack-title {
+        font-size: 11px;
+
+        letter-spacing: 3px;
+
+        color: #7dd3fc;
+
+        margin-bottom: 16px;
+      }
+
+      .stack-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .stack-container span {
+        padding: 9px 14px;
+
+        border-radius: 999px;
+
+        background: rgba(255, 255, 255, 0.04);
+
+        border: 1px solid rgba(255, 255, 255, 0.06);
+
+        font-size: 11px;
+
+        color: #dbeafe;
+      }
+
+      /* TABLET */
+
+      @media (max-width: 1000px) {
+        .top-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .bottom-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* MOBILE */
+
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+
+        .about-page {
+          padding: 90px 5% 35px;
+        }
+
+        .main-title {
+          font-size: 2rem;
+
+          line-height: 1.1;
+
+          margin-bottom: 24px;
+        }
+
+        .glass-card {
+          padding: 18px;
+          border-radius: 18px;
+        }
+
+        .intro {
+          font-size: 1rem;
+        }
+
+        .description {
+          font-size: 12px;
+          line-height: 1.6;
+        }
+
+        .mini-points {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+
+        .mini-point {
+          font-size: 11px;
+          padding: 10px;
+        }
+
+        .skill {
+          padding: 10px;
+        }
+
+        .skill span {
+          font-size: 11px;
+        }
+
+        .bottom-grid {
+          gap: 12px;
+        }
+
+        .highlight-card {
+          padding: 18px;
+        }
+
+        .highlight-title {
+          font-size: 0.95rem;
+        }
+
+        .highlight-text {
+          font-size: 11px;
+        }
+
+        .stack-section {
+          padding: 18px;
+        }
+
+        .stack-container {
+          gap: 8px;
+        }
+
+        .stack-container span {
+          font-size: 10px;
+          padding: 8px 12px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- BACKGROUND -->
+
+    <canvas id="particles"></canvas>
+
+    <div class="grid"></div>
+    <div class="glow"></div>
+
+    <!-- NAVBAR -->
+
+    <nav>
+      <div class="logo">LAHARI M</div>
+
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+
+        <a href="about.html" class="active">About</a>
+
+        <a href="projects.html">Projects</a>
+
+        <a href="experience.html">Experience</a>
+
+        <a href="achievements.html">Achievements</a>
+
+        <a href="contact.html">Contact</a>
+      </div>
+    </nav>
+
+    <!-- ABOUT PAGE -->
+
+    <section class="about-page">
+      <p class="section-tag">ABOUT</p>
+
+      <h1 class="main-title">
+        Building backend systems that stay reliable under real-world AI
+        workloads.
+      </h1>
+
+      <div class="top-grid">
+        <div class="glass-card">
+          <p class="intro">
+            I focus on backend engineering, async workflows, and AI
+            infrastructure built for operational reliability.
+          </p>
+
+          <div class="mini-points">
+            <div class="mini-point">⚡ Async workflow orchestration</div>
+
+            <div class="mini-point">📦 Queue-based backend systems</div>
+
+            <div class="mini-point">🧠 Retrieval infrastructure</div>
+
+            <div class="mini-point">🔄 Fault-tolerant workflows</div>
+          </div>
+
+          <p class="description">
+            My work centers around FastAPI services, Redis queues, PostgreSQL
+            architecture, and production-focused AI systems.
+          </p>
+
+          <p class="description">
+            Instead of building tutorial-level applications, I enjoy designing
+            systems that handle retries, failures, async processing, and
+            scalable workflows.
+          </p>
+
+          <p class="description">
+            I enjoy designing backend workflows that continue operating
+            predictably even when external AI or API dependencies fail.
+          </p>
+
+          <div class="real-metrics">
+            <div class="real-metric">&lt;30ms enqueue response</div>
+
+            <div class="real-metric">800ms–2s async AI processing</div>
+          </div>
+        </div>
+
+        <div class="glass-card">
+          <p class="mini-title">ENGINEERING FOCUS</p>
+
+          <div class="skill-list">
+            <div class="skill">
+              <span>FastAPI Backend Systems</span>
+              <small>CORE</small>
+            </div>
+
+            <div class="skill">
+              <span>Redis Async Queues</span>
+              <small>ASYNC</small>
+            </div>
+
+            <div class="skill">
+              <span>PostgreSQL Design</span>
+              <small>DATABASE</small>
+            </div>
+
+            <div class="skill">
+              <span>RAG + Embeddings</span>
+              <small>GENAI</small>
+            </div>
+
+            <div class="skill">
+              <span>Docker Deployment</span>
+              <small>DEVOPS</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-grid">
+        <div class="highlight-card">
+          <div class="highlight-icon">⚡</div>
+
+          <h3 class="highlight-title">Async Architecture</h3>
+
+          <p class="highlight-text">
+            Building queue-based systems where AI workloads run separately from
+            request-response cycles for better scalability and performance.
+          </p>
+        </div>
+
+        <div class="highlight-card">
+          <div class="highlight-icon">🧠</div>
+
+          <h3 class="highlight-title">Retrieval Infrastructure</h3>
+
+          <p class="highlight-text">
+            Working with embeddings, semantic retrieval, RAG pipelines, and
+            structured LLM outputs focused on operational AI systems.
+          </p>
+        </div>
+
+        <div class="highlight-card">
+          <div class="highlight-icon">🔄</div>
+
+          <h3 class="highlight-title">Reliability Engineering</h3>
+
+          <p class="highlight-text">
+            Interested in retries, idempotency, fault tolerance, circuit
+            breakers, and resilient backend system design.
+          </p>
+        </div>
+      </div>
+
+      <div class="stack-section">
+        <div class="stack-title">CURRENT STACK</div>
+
+        <div class="stack-container">
+          <span>FastAPI</span>
+          <span>PostgreSQL</span>
+          <span>Redis</span>
+          <span>Docker</span>
+          <span>LangChain</span>
+          <span>FAISS</span>
+          <span>Groq</span>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      /* PARTICLES */
+
+      const canvas = document.getElementById("particles");
+
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      let particlesArray = [];
+
+      class Particle {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+
+          this.size = Math.random() * 2;
+
+          this.speedX = (Math.random() - 0.5) * 0.25;
+          this.speedY = (Math.random() - 0.5) * 0.25;
+        }
+
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+
+          if (this.x > canvas.width) this.x = 0;
+          if (this.x < 0) this.x = canvas.width;
+
+          if (this.y > canvas.height) this.y = 0;
+          if (this.y < 0) this.y = canvas.height;
+        }
+
+        draw() {
+          ctx.fillStyle = "rgba(125,211,252,0.7)";
+
+          ctx.beginPath();
+
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+
+          ctx.fill();
+        }
+      }
+
+      function init() {
+        particlesArray = [];
+
+        for (let i = 0; i < 45; i++) {
+          particlesArray.push(new Particle());
+        }
+      }
+
+      function connectParticles() {
+        for (let a = 0; a < particlesArray.length; a++) {
+          for (let b = a; b < particlesArray.length; b++) {
+            let dx = particlesArray[a].x - particlesArray[b].x;
+            let dy = particlesArray[a].y - particlesArray[b].y;
+
+            let distance = dx * dx + dy * dy;
+
+            if (distance < 10000) {
+              ctx.strokeStyle = "rgba(125,211,252,0.04)";
+
+              ctx.lineWidth = 1;
+
+              ctx.beginPath();
+
+              ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+
+              ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+
+              ctx.stroke();
+            }
+          }
+        }
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        particlesArray.forEach((particle) => {
+          particle.update();
+          particle.draw();
+        });
+
+        connectParticles();
+
+        requestAnimationFrame(animate);
+      }
+
+      init();
+      animate();
+
+      window.addEventListener("resize", () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        init();
+      });
+    </script>
+
+    <!-- CHATBOT -->
+
+    <div id="chatbot-container"></div>
+
+    <script>
+      fetch("chatbot/chatbot.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("chatbot-container").innerHTML = data;
+
+          const script = document.createElement("script");
+
+          script.src = "chatbot/chatbot.js";
+
+          document.body.appendChild(script);
+        });
+    </script>
+    <script>
+      /* SESSION ID */
+
+      let sessionId = localStorage.getItem("session_id");
+
+      if (!sessionId) {
+        sessionId = Math.random().toString(36).substring(2);
+
+        localStorage.setItem("session_id", sessionId);
+      }
+
+      /* START TIME */
+
+      const startTime = Date.now();
+
+      /* SEND ANALYTICS */
+
+      window.addEventListener("beforeunload", async () => {
+        const duration = Math.floor((Date.now() - startTime) / 1000);
+
+        await fetch("http://127.0.0.1:8000/track", {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            session_id: sessionId,
+
+            page: "home",
+
+            duration: `${duration}s`,
+
+            device: navigator.userAgent,
+
+            country: "unknown",
+          }),
+        });
+      });
+    </script>
+  </body>
+</html>

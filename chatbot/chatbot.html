@@ -1,0 +1,101 @@
+<!-- CHATBOT BUTTON -->
+
+<div class="chatbot-wrapper">
+  <div class="ai-button" id="aiButton">
+    <div class="robot-head">
+      <div class="robot-eye left-eye"></div>
+      <div class="robot-eye right-eye"></div>
+
+      <div class="robot-mouth"></div>
+
+      <div class="robot-antenna"></div>
+    </div>
+  </div>
+
+  <p class="click-text">Ask AI</p>
+</div>
+
+<!-- CHAT WINDOW -->
+
+<div class="chat-window" id="chatWindow">
+  <div class="chat-header">
+    <div class="header-left">
+      <div class="ai-icon">AI</div>
+
+      <div>
+        <h3>AI Portfolio Assistant</h3>
+
+        <p>Backend systems · Projects · Experience</p>
+      </div>
+    </div>
+
+    <button id="closeChat">✕</button>
+  </div>
+
+  <div class="chat-body" id="chatBody">
+    <div class="bot-message">
+      Portfolio AI Assistant initialized.
+
+      <br /><br />
+
+      Ask about:
+      <br />
+      • MedRoute architecture
+      <br />
+      • backend systems
+      <br />
+      • async workflows
+      <br />
+      • achievements
+      <br />
+      • experience
+    </div>
+  </div>
+
+  <div class="chat-input-area">
+    <input type="text" id="chatInput" placeholder="Ask something..." />
+
+    <button id="sendBtn">Send</button>
+  </div>
+</div>
+<script>
+  /* SESSION ID */
+
+  let sessionId = localStorage.getItem("session_id");
+
+  if (!sessionId) {
+    sessionId = Math.random().toString(36).substring(2);
+
+    localStorage.setItem("session_id", sessionId);
+  }
+
+  /* START TIME */
+
+  const startTime = Date.now();
+
+  /* SEND ANALYTICS */
+
+  window.addEventListener("beforeunload", async () => {
+    const duration = Math.floor((Date.now() - startTime) / 1000);
+
+    await fetch("http://127.0.0.1:8000/track", {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify({
+        session_id: sessionId,
+
+        page: "home",
+
+        duration: `${duration}s`,
+
+        device: navigator.userAgent,
+
+        country: "unknown",
+      }),
+    });
+  });
+</script>

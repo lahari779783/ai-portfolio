@@ -1,0 +1,945 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Lahari M | Backend Engineer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="chatbot/chatbot.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: #050816;
+        color: white;
+        font-family: "Inter", sans-serif;
+        overflow-x: hidden;
+        height: 100vh;
+        position: relative;
+      }
+
+      /* CURSOR */
+
+      /* BACKGROUND */
+
+      canvas {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+      }
+
+      .grid {
+        position: fixed;
+        inset: 0;
+
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+
+        background-size: 60px 60px;
+
+        mask-image: radial-gradient(
+          circle at center,
+          black 30%,
+          transparent 90%
+        );
+
+        z-index: -1;
+      }
+
+      .glow {
+        position: fixed;
+
+        width: 430px;
+        height: 430px;
+
+        background: radial-gradient(
+          circle,
+          rgba(0, 140, 255, 0.15),
+          transparent 70%
+        );
+
+        filter: blur(50px);
+
+        top: 50%;
+        left: 50%;
+
+        transform: translate(-50%, -50%);
+
+        z-index: -1;
+
+        animation: pulse 6s infinite ease-in-out;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+
+        50% {
+          transform: translate(-50%, -50%) scale(1.1);
+        }
+      }
+
+      /* NAVBAR */
+
+      nav {
+        position: fixed;
+
+        top: 10px;
+        left: 50%;
+
+        transform: translateX(-50%);
+
+        width: 92%;
+        max-width: 1180px;
+
+        height: 52px;
+
+        padding: 10px 20px;
+
+        border-radius: 16px;
+
+        background: rgba(255, 255, 255, 0.04);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        backdrop-filter: blur(20px);
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        z-index: 1000;
+
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+      }
+
+      .logo {
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: white;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 18px;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: #94a3b8;
+        font-size: 12px;
+        transition: 0.3s;
+        position: relative;
+      }
+
+      .nav-links a:hover {
+        color: white;
+      }
+
+      .nav-links a::after {
+        content: "";
+
+        position: absolute;
+
+        left: 0;
+        bottom: -4px;
+
+        width: 0%;
+
+        height: 1px;
+
+        background: #7dd3fc;
+
+        transition: 0.3s;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      .active {
+        color: white !important;
+      }
+
+      /* HOME */
+
+      .home {
+        width: 100%;
+        height: 100vh;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        text-align: center;
+
+        padding: 78px 18px 18px;
+
+        overflow: hidden;
+      }
+
+      /* SMALL TAG */
+
+      .small-tag {
+        color: #7dd3fc;
+
+        font-size: 10px;
+
+        letter-spacing: 3px;
+
+        margin-bottom: 10px;
+      }
+
+      /* TITLE */
+
+      h1 {
+        font-size: clamp(2.4rem, 5vw, 4rem);
+
+        font-weight: 700;
+
+        line-height: 0.9;
+
+        letter-spacing: -2px;
+
+        margin-bottom: 10px;
+
+        background: linear-gradient(to right, #ffffff, #7dd3fc);
+
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* SUBTITLE */
+
+      .subtitle {
+        font-size: 0.88rem;
+
+        color: #cbd5e1;
+
+        max-width: 720px;
+
+        line-height: 1.6;
+
+        margin-bottom: 18px;
+      }
+
+      .highlight {
+        color: #7dd3fc;
+      }
+
+      /* TAGS */
+
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        gap: 8px;
+
+        margin-bottom: 18px;
+
+        max-width: 850px;
+      }
+
+      .tag {
+        padding: 7px 13px;
+
+        border-radius: 999px;
+
+        background: rgba(255, 255, 255, 0.05);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        color: #dbeafe;
+
+        font-size: 11px;
+
+        transition: 0.35s;
+
+        backdrop-filter: blur(10px);
+      }
+
+      .tag:hover {
+        transform: translateY(-4px);
+
+        background: rgba(0, 140, 255, 0.12);
+
+        box-shadow: 0 10px 20px rgba(0, 140, 255, 0.12);
+      }
+
+      /* TERMINAL */
+
+      .terminal {
+        width: 400px;
+        max-width: 92%;
+
+        background: rgba(255, 255, 255, 0.04);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        border-radius: 16px;
+
+        backdrop-filter: blur(18px);
+
+        padding: 14px;
+
+        margin-bottom: 20px;
+
+        box-shadow: 0 0 40px rgba(0, 140, 255, 0.08);
+      }
+
+      .terminal-top {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+      }
+
+      .red {
+        background: #ff5f56;
+      }
+
+      .yellow {
+        background: #ffbd2e;
+      }
+
+      .green {
+        background: #27c93f;
+      }
+
+      .line {
+        font-family: "JetBrains Mono", monospace;
+
+        color: #8be9fd;
+
+        font-size: 11px;
+
+        margin-bottom: 6px;
+
+        text-align: left;
+      }
+
+      .cursor {
+        display: inline-block;
+        width: 6px;
+        height: 13px;
+        background: #8be9fd;
+        margin-left: 4px;
+        animation: blink 0.8s infinite;
+      }
+
+      @keyframes blink {
+        50% {
+          opacity: 0;
+        }
+      }
+
+      /* METRICS */
+
+      .metrics {
+        width: 100%;
+        max-width: 930px;
+
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+
+        gap: 12px;
+
+        margin-bottom: 18px;
+      }
+
+      .metric-card {
+        background: rgba(255, 255, 255, 0.04);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        border-radius: 16px;
+
+        padding: 16px 12px;
+
+        backdrop-filter: blur(18px);
+
+        transition: 0.35s;
+      }
+
+      .metric-card:hover {
+        transform: translateY(-5px);
+
+        border-color: rgba(125, 211, 252, 0.18);
+
+        box-shadow: 0 12px 25px rgba(0, 140, 255, 0.08);
+      }
+
+      .metric-number {
+        font-size: 1rem;
+        font-weight: 700;
+
+        color: #7dd3fc;
+
+        margin-bottom: 6px;
+      }
+
+      .metric-label {
+        color: #cbd5e1;
+
+        font-size: 11px;
+
+        line-height: 1.4;
+      }
+
+      /* FOCUS */
+
+      .focus-section {
+        width: 100%;
+        max-width: 860px;
+
+        margin-bottom: 18px;
+
+        padding: 18px;
+
+        border-radius: 18px;
+
+        background: rgba(255, 255, 255, 0.04);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        backdrop-filter: blur(18px);
+
+        text-align: left;
+      }
+
+      .focus-title {
+        color: #7dd3fc;
+
+        font-size: 10px;
+
+        letter-spacing: 3px;
+
+        margin-bottom: 12px;
+      }
+
+      .focus-grid {
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 10px;
+      }
+
+      .focus-item {
+        padding: 11px 12px;
+
+        border-radius: 12px;
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid rgba(255, 255, 255, 0.05);
+
+        color: #dbeafe;
+
+        font-size: 11px;
+
+        transition: 0.3s;
+      }
+
+      .focus-item:hover {
+        transform: translateY(-4px);
+
+        background: rgba(0, 140, 255, 0.08);
+
+        border-color: rgba(125, 211, 252, 0.16);
+      }
+
+      /* SOCIALS */
+
+      .socials {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .social-btn {
+        padding: 10px 15px;
+
+        border-radius: 12px;
+
+        text-decoration: none;
+
+        color: white;
+
+        background: rgba(255, 255, 255, 0.05);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        transition: 0.35s;
+
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        backdrop-filter: blur(10px);
+
+        font-size: 12px;
+      }
+
+      .social-btn:hover {
+        transform: translateY(-4px);
+
+        background: rgba(0, 140, 255, 0.12);
+
+        box-shadow: 0 12px 25px rgba(0, 140, 255, 0.12);
+      }
+
+      .primary-btn {
+        border-color: rgba(125, 211, 252, 0.25);
+
+        box-shadow: 0 0 18px rgba(0, 140, 255, 0.08);
+      }
+
+      .secondary-btn {
+        background: rgba(0, 140, 255, 0.08);
+      }
+
+      /* TABLET */
+
+      @media (max-width: 1000px) {
+        .home {
+          padding-top: 90px;
+        }
+
+        .metrics {
+          grid-template-columns: repeat(2, 1fr);
+
+          max-width: 700px;
+        }
+
+        .focus-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* MOBILE */
+
+      @media (max-width: 768px) {
+        body {
+          overflow-y: auto;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .home {
+          height: auto;
+          min-height: 100vh;
+
+          padding: 88px 14px 24px;
+        }
+
+        h1 {
+          font-size: 2.2rem;
+        }
+
+        .subtitle {
+          font-size: 0.82rem;
+
+          line-height: 1.5;
+
+          margin-bottom: 16px;
+        }
+
+        .tags {
+          gap: 7px;
+          margin-bottom: 16px;
+        }
+
+        .tag {
+          font-size: 10px;
+          padding: 6px 10px;
+        }
+
+        .terminal {
+          width: 100%;
+          max-width: 100%;
+
+          padding: 12px;
+
+          margin-bottom: 16px;
+        }
+
+        .line {
+          font-size: 10px;
+        }
+
+        .metrics {
+          grid-template-columns: 1fr 1fr;
+
+          gap: 8px;
+
+          margin-bottom: 16px;
+        }
+
+        .metric-card {
+          padding: 12px 8px;
+        }
+
+        .metric-number {
+          font-size: 0.95rem;
+        }
+
+        .metric-label {
+          font-size: 10px;
+        }
+
+        .focus-section {
+          padding: 14px;
+
+          margin-bottom: 16px;
+        }
+
+        .focus-grid {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+
+        .focus-item {
+          padding: 10px;
+
+          font-size: 10px;
+        }
+
+        .socials {
+          gap: 8px;
+        }
+
+        .social-btn {
+          padding: 9px 12px;
+
+          font-size: 11px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- BACKGROUND -->
+
+    <canvas id="particles"></canvas>
+
+    <div class="grid"></div>
+
+    <div class="glow"></div>
+
+    <!-- NAVBAR -->
+
+    <nav>
+      <div class="logo">LAHARI M</div>
+
+      <div class="nav-links">
+        <a href="index.html" class="active">Home</a>
+
+        <a href="about.html">About</a>
+
+        <a href="projects.html">Projects</a>
+
+        <a href="experience.html">Experience</a>
+        <a href="achievements.html" class="active">Achievements</a>
+
+        <a href="contact.html">Contact</a>
+      </div>
+    </nav>
+
+    <!-- HOME -->
+
+    <section class="home">
+      <p class="small-tag">BACKEND ENGINEER · GENAI SYSTEMS</p>
+
+      <h1>LAHARI M</h1>
+
+      <div class="subtitle">
+        Building <span class="highlight">async backend systems</span>, AI
+        pipelines, and reliable infrastructure focused on real-world
+        scalability, retrieval workflows, and production-grade engineering.
+      </div>
+
+      <!-- TAGS -->
+
+      <div class="tags">
+        <div class="tag">FastAPI</div>
+
+        <div class="tag">PostgreSQL</div>
+
+        <div class="tag">Redis Queues</div>
+
+        <div class="tag">GenAI</div>
+
+        <div class="tag">RAG Systems</div>
+
+        <div class="tag">Docker</div>
+
+        <div class="tag">Workflow Systems</div>
+
+        <div class="tag">Async Python</div>
+      </div>
+
+      <!-- TERMINAL -->
+
+      <div class="terminal">
+        <div class="terminal-top">
+          <div class="dot red"></div>
+          <div class="dot yellow"></div>
+          <div class="dot green"></div>
+        </div>
+
+        <div class="line">$ initializing backend systems...</div>
+
+        <div class="line">$ connecting redis queue...</div>
+
+        <div class="line">$ loading AI pipelines...</div>
+
+        <div class="line">
+          $ system operational
+          <span class="cursor"></span>
+        </div>
+      </div>
+
+      <!-- METRICS -->
+
+      <div class="metrics">
+        <div class="metric-card">
+          <div class="metric-number">Async</div>
+
+          <div class="metric-label">
+            Queue-based workflow systems and worker orchestration
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-number">RAG</div>
+
+          <div class="metric-label">
+            Embedding pipelines and semantic retrieval systems
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-number">Fault-Tolerant</div>
+
+          <div class="metric-label">
+            Retry handling, idempotency, and resilient backend workflows
+          </div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-number">Docker</div>
+
+          <div class="metric-label">
+            CI/CD deployment and backend infrastructure workflows
+          </div>
+        </div>
+      </div>
+
+      <!-- CURRENT FOCUS -->
+
+      <!-- SOCIAL BUTTONS -->
+
+      <div class="socials">
+        <a
+          class="social-btn primary-btn"
+          href="https://github.com/lahari779783"
+          target="_blank"
+        >
+          💻 GitHub
+        </a>
+
+        <a class="social-btn secondary-btn" href="#"> 📄 Resume </a>
+
+        <a
+          class="social-btn"
+          href="https://linkedin.com/in/lahari-m"
+          target="_blank"
+        >
+          🚀 LinkedIn
+        </a>
+
+        <a class="social-btn" href="mailto:lahrim786@gmail.com"> ✉️ Email </a>
+      </div>
+    </section>
+
+    <!-- JAVASCRIPT -->
+
+    <script>
+      /* PARTICLES */
+
+      const canvas = document.getElementById("particles");
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      let particlesArray = [];
+
+      class Particle {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+
+          this.size = Math.random() * 2;
+
+          this.speedX = (Math.random() - 0.5) * 0.25;
+          this.speedY = (Math.random() - 0.5) * 0.25;
+        }
+
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+
+          if (this.x > canvas.width) this.x = 0;
+          if (this.x < 0) this.x = canvas.width;
+
+          if (this.y > canvas.height) this.y = 0;
+          if (this.y < 0) this.y = canvas.height;
+        }
+
+        draw() {
+          ctx.fillStyle = "rgba(125,211,252,0.7)";
+
+          ctx.beginPath();
+
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+
+          ctx.fill();
+        }
+      }
+
+      function init() {
+        particlesArray = [];
+
+        for (let i = 0; i < 60; i++) {
+          particlesArray.push(new Particle());
+        }
+      }
+
+      function connectParticles() {
+        for (let a = 0; a < particlesArray.length; a++) {
+          for (let b = a; b < particlesArray.length; b++) {
+            let dx = particlesArray[a].x - particlesArray[b].x;
+            let dy = particlesArray[a].y - particlesArray[b].y;
+
+            let distance = dx * dx + dy * dy;
+
+            if (distance < 10000) {
+              ctx.strokeStyle = "rgba(125,211,252,0.04)";
+
+              ctx.lineWidth = 1;
+
+              ctx.beginPath();
+
+              ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+
+              ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+
+              ctx.stroke();
+            }
+          }
+        }
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        particlesArray.forEach((particle) => {
+          particle.update();
+          particle.draw();
+        });
+
+        connectParticles();
+
+        requestAnimationFrame(animate);
+      }
+
+      init();
+      animate();
+    </script>
+    <!-- CHATBOT -->
+
+    <div id="chatbot-container"></div>
+
+    <script>
+      fetch("chatbot/chatbot.html")
+        .then((response) => response.text())
+        .then((data) => {
+          document.getElementById("chatbot-container").innerHTML = data;
+
+          const script = document.createElement("script");
+
+          script.src = "chatbot/chatbot.js";
+
+          document.body.appendChild(script);
+        });
+    </script>
+    <script>
+      /* SESSION ID */
+
+      let sessionId = localStorage.getItem("session_id");
+
+      if (!sessionId) {
+        sessionId = Math.random().toString(36).substring(2);
+
+        localStorage.setItem("session_id", sessionId);
+      }
+
+      /* START TIME */
+
+      const startTime = Date.now();
+
+      /* SEND ANALYTICS */
+
+      window.addEventListener("beforeunload", async () => {
+        const duration = Math.floor((Date.now() - startTime) / 1000);
+
+        await fetch("http://127.0.0.1:8000/track", {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            session_id: sessionId,
+
+            page: "home",
+
+            duration: `${duration}s`,
+
+            device: navigator.userAgent,
+
+            country: "unknown",
+          }),
+        });
+      });
+    </script>
+  </body>
+</html>

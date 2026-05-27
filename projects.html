@@ -1,0 +1,1685 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>MedRoute | Lahari M</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="chatbot/chatbot.css" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: #050816;
+        color: white;
+        font-family: "Inter", sans-serif;
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+
+      /* BACKGROUND */
+
+      canvas {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+      }
+
+      .grid {
+        position: fixed;
+        inset: 0;
+
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+
+        background-size: 60px 60px;
+
+        mask-image: radial-gradient(
+          circle at center,
+          black 30%,
+          transparent 90%
+        );
+
+        z-index: -1;
+      }
+
+      .glow {
+        position: fixed;
+
+        width: 500px;
+        height: 500px;
+
+        background: radial-gradient(
+          circle,
+          rgba(0, 140, 255, 0.16),
+          transparent 70%
+        );
+
+        filter: blur(50px);
+
+        top: 50%;
+        left: 50%;
+
+        transform: translate(-50%, -50%);
+
+        z-index: -1;
+
+        animation: pulse 6s infinite ease-in-out;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+
+        50% {
+          transform: translate(-50%, -50%) scale(1.15);
+        }
+      }
+
+      /* NAVBAR */
+
+      nav {
+        position: fixed;
+
+        top: 20px;
+        left: 50%;
+
+        transform: translateX(-50%);
+
+        width: 92%;
+        max-width: 1300px;
+
+        padding: 16px 28px;
+
+        border-radius: 20px;
+
+        background: rgba(255, 255, 255, 0.04);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        backdrop-filter: blur(20px);
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        z-index: 1000;
+      }
+
+      .logo {
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 28px;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: #94a3b8;
+        font-size: 14px;
+        transition: 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: white;
+      }
+
+      .active {
+        color: white !important;
+      }
+
+      /* LAYOUT */
+
+      .main-layout {
+        width: 100%;
+
+        min-height: 100vh;
+
+        padding: 140px 5% 60px;
+
+        display: grid;
+
+        grid-template-columns: 300px 1fr;
+
+        gap: 28px;
+      }
+
+      /* SIDEBAR */
+
+      .sidebar {
+        position: sticky;
+        top: 120px;
+        height: fit-content;
+      }
+
+      .project-mini-card {
+        background: rgba(255, 255, 255, 0.04);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        border-radius: 24px;
+
+        padding: 22px;
+
+        backdrop-filter: blur(20px);
+
+        margin-bottom: 18px;
+      }
+
+      .mini-project-name {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+
+      .mini-project-desc {
+        color: #94a3b8;
+        line-height: 1.7;
+        font-size: 13px;
+        margin-bottom: 24px;
+      }
+
+      .sidebar-buttons {
+        display: flex;
+        gap: 10px;
+      }
+
+      .switch-btn {
+        flex: 1;
+
+        padding: 12px;
+
+        border-radius: 12px;
+
+        background: rgba(255, 255, 255, 0.05);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        color: white;
+
+        transition: 0.3s;
+
+        font-size: 13px;
+      }
+
+      .switch-btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .primary-switch {
+        background: rgba(0, 140, 255, 0.12);
+        border-color: rgba(125, 211, 252, 0.2);
+      }
+
+      .coming-soon {
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid rgba(255, 255, 255, 0.06);
+
+        border-radius: 20px;
+
+        padding: 18px;
+      }
+
+      .coming-soon h3 {
+        font-size: 14px;
+        margin-bottom: 8px;
+      }
+
+      .coming-soon p {
+        color: #94a3b8;
+        font-size: 12px;
+        line-height: 1.7;
+      }
+
+      /* CONTENT */
+
+      .content-panel {
+        max-width: 1050px;
+
+        width: 100%;
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        border-radius: 28px;
+
+        padding: 30px;
+
+        backdrop-filter: blur(20px);
+      }
+
+      .section {
+        margin-bottom: 42px;
+      }
+
+      .section-label {
+        color: #7dd3fc;
+        font-size: 12px;
+        letter-spacing: 3px;
+        margin-bottom: 14px;
+      }
+
+      .section-title {
+        font-size: 2rem;
+        line-height: 1.2;
+        margin-bottom: 16px;
+
+        background: linear-gradient(to right, #ffffff, #7dd3fc);
+
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .section-desc {
+        color: #94a3b8;
+        line-height: 1.8;
+        max-width: 760px;
+        font-size: 13px;
+      }
+
+      /* METRICS */
+
+      .metrics-strip {
+        display: flex;
+
+        gap: 12px;
+
+        flex-wrap: wrap;
+      }
+
+      .metric-pill {
+        padding: 10px 14px;
+
+        border-radius: 999px;
+
+        background: rgba(0, 140, 255, 0.08);
+
+        border: 1px solid rgba(125, 211, 252, 0.16);
+
+        color: #dbeafe;
+
+        font-size: 12px;
+      }
+
+      /* LATENCY */
+
+      .latency-inline {
+        display: flex;
+
+        align-items: center;
+
+        gap: 14px;
+
+        flex-wrap: wrap;
+      }
+
+      .latency-chip {
+        padding: 10px 14px;
+
+        border-radius: 14px;
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid rgba(255, 255, 255, 0.06);
+
+        font-size: 12px;
+      }
+
+      .latency-chip strong {
+        color: #7dd3fc;
+        font-weight: 500;
+      }
+
+      .latency-arrow {
+        color: #7dd3fc;
+        font-size: 16px;
+      }
+
+      .fast-chip {
+        background: rgba(0, 140, 255, 0.08);
+
+        border-color: rgba(125, 211, 252, 0.16);
+      }
+
+      /* FSM */
+
+      .fsm-strip,
+      .fsm-reroute {
+        display: flex;
+
+        align-items: center;
+
+        flex-wrap: wrap;
+
+        gap: 10px;
+
+        margin-bottom: 14px;
+      }
+
+      .fsm-state-pill {
+        padding: 10px 14px;
+
+        border-radius: 12px;
+
+        background: rgba(255, 255, 255, 0.04);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        font-size: 12px;
+      }
+
+      .success-pill {
+        background: rgba(0, 140, 255, 0.08);
+
+        border-color: rgba(125, 211, 252, 0.2);
+      }
+
+      .reject-pill {
+        background: rgba(255, 80, 80, 0.08);
+
+        border-color: rgba(255, 80, 80, 0.15);
+      }
+
+      .fsm-connector {
+        color: #7dd3fc;
+        font-size: 13px;
+      }
+
+      .fsm-note {
+        color: #94a3b8;
+        font-size: 12px;
+      }
+
+      /* ARCHITECTURE */
+
+      .architecture-box {
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid rgba(255, 255, 255, 0.06);
+
+        border-radius: 22px;
+
+        padding: 22px;
+      }
+
+      .architecture-flow {
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        gap: 10px;
+
+        margin-top: 24px;
+      }
+
+      .flow-node {
+        width: 220px;
+
+        padding: 12px;
+
+        border-radius: 14px;
+
+        background: rgba(255, 255, 255, 0.04);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        text-align: center;
+
+        font-size: 13px;
+      }
+
+      .flow-arrow {
+        color: #7dd3fc;
+        font-size: 16px;
+      }
+
+      .worker-group {
+        width: 270px;
+
+        padding: 16px;
+
+        border-radius: 18px;
+
+        background: rgba(0, 140, 255, 0.08);
+
+        border: 1px solid rgba(125, 211, 252, 0.18);
+
+        text-align: center;
+      }
+
+      .worker-title {
+        color: #7dd3fc;
+        margin-bottom: 12px;
+        font-size: 13px;
+      }
+
+      .worker-items {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .worker-item {
+        padding: 10px;
+
+        border-radius: 10px;
+
+        background: rgba(255, 255, 255, 0.04);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        font-size: 12px;
+      }
+
+      /* FAILURE */
+
+      .failure-box {
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid rgba(255, 255, 255, 0.06);
+
+        border-radius: 20px;
+
+        padding: 20px;
+      }
+
+      .failure-flow {
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+
+        flex-wrap: nowrap;
+
+        overflow: auto;
+
+        margin-top: 20px;
+      }
+
+      .failure-node {
+        padding: 12px 14px;
+
+        border-radius: 14px;
+
+        background: rgba(255, 255, 255, 0.04);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        min-width: max-content;
+
+        font-size: 12px;
+      }
+
+      .success-node {
+        background: rgba(0, 140, 255, 0.08);
+
+        border-color: rgba(125, 211, 252, 0.18);
+      }
+
+      .failure-arrow {
+        color: #7dd3fc;
+        font-size: 14px;
+      }
+
+      /* RELIABILITY */
+
+      .reliability-grid {
+        display: grid;
+
+        grid-template-columns: repeat(4, 1fr);
+
+        gap: 14px;
+      }
+
+      .reliability-card {
+        padding: 18px;
+
+        border-radius: 18px;
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .reliability-title {
+        color: #7dd3fc;
+        margin-bottom: 12px;
+        font-size: 13px;
+      }
+
+      .reliability-text {
+        color: #94a3b8;
+        line-height: 1.7;
+        font-size: 12px;
+      }
+
+      /* LOGS */
+
+      .logs-terminal {
+        background: #020617;
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        border-radius: 20px;
+
+        padding: 18px;
+
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      .terminal-line {
+        color: #8be9fd;
+        margin-bottom: 10px;
+        font-size: 11px;
+      }
+
+      /* CAROUSEL */
+
+      .carousel-wrapper {
+        position: relative;
+        margin-top: 24px;
+      }
+
+      .carousel-container {
+        overflow: hidden;
+        border-radius: 22px;
+      }
+
+      .carousel-track {
+        display: flex;
+        transition: transform 0.5s ease;
+      }
+
+      .carousel-card {
+        min-width: 100%;
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid rgba(255, 255, 255, 0.06);
+
+        border-radius: 22px;
+
+        overflow: hidden;
+      }
+
+      .carousel-image {
+        height: 320px;
+
+        background: #0f172a;
+
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        color: #7dd3fc;
+
+        font-size: 13px;
+      }
+
+      .carousel-content {
+        padding: 20px;
+      }
+
+      .carousel-content h3 {
+        margin-bottom: 10px;
+        font-size: 15px;
+      }
+
+      .carousel-content p {
+        color: #94a3b8;
+        line-height: 1.7;
+        font-size: 13px;
+      }
+
+      .carousel-buttons {
+        display: flex;
+
+        gap: 10px;
+
+        margin-top: 16px;
+      }
+
+      .carousel-btn {
+        width: 40px;
+        height: 40px;
+
+        border: none;
+
+        border-radius: 12px;
+
+        background: rgba(255, 255, 255, 0.05);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        color: white;
+
+        transition: 0.3s;
+      }
+
+      .carousel-btn:hover {
+        background: rgba(0, 140, 255, 0.12);
+      }
+
+      /* DECISIONS */
+
+      .decision-grid {
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 14px;
+      }
+
+      .decision-card {
+        padding: 18px;
+
+        border-radius: 18px;
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .decision-card h3 {
+        margin-bottom: 12px;
+        color: #7dd3fc;
+        font-size: 14px;
+      }
+
+      .decision-card p {
+        color: #94a3b8;
+        line-height: 1.7;
+        font-size: 12px;
+      }
+
+      /* THEME */
+
+      .theme-section {
+        display: none;
+      }
+
+      .vision-block {
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid rgba(255, 255, 255, 0.06);
+
+        border-radius: 22px;
+
+        padding: 22px;
+
+        margin-bottom: 22px;
+      }
+
+      .vision-block h3 {
+        margin-bottom: 14px;
+        color: #7dd3fc;
+        font-size: 15px;
+      }
+
+      .vision-block p,
+      .vision-block li {
+        color: #94a3b8;
+
+        line-height: 1.9;
+
+        font-size: 13px;
+      }
+
+      .vision-block ul {
+        margin-top: 14px;
+        padding-left: 18px;
+      }
+
+      /* BIG FLOW */
+
+      .vision-flow {
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        gap: 14px;
+
+        margin-top: 26px;
+      }
+
+      .vision-node {
+        padding: 14px 18px;
+
+        border-radius: 16px;
+
+        background: rgba(255, 255, 255, 0.04);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        width: 320px;
+
+        text-align: center;
+
+        font-size: 13px;
+      }
+
+      .vision-split {
+        display: flex;
+
+        gap: 14px;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+      }
+
+      .vision-arrow {
+        color: #7dd3fc;
+        font-size: 18px;
+      }
+
+      /* INFRA */
+
+      .infra-grid {
+        display: grid;
+
+        grid-template-columns: repeat(5, 1fr);
+
+        gap: 12px;
+
+        margin-top: 24px;
+      }
+
+      .infra-card {
+        padding: 16px;
+
+        border-radius: 16px;
+
+        background: rgba(255, 255, 255, 0.03);
+
+        border: 1px solid rgba(255, 255, 255, 0.06);
+
+        font-size: 12px;
+
+        line-height: 1.7;
+
+        color: #94a3b8;
+      }
+
+      /* MOBILE */
+
+      @media (max-width: 1100px) {
+        .main-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          position: relative;
+          top: 0;
+        }
+
+        .reliability-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .infra-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+
+        .content-panel {
+          padding: 22px;
+        }
+
+        .section-title {
+          font-size: 1.7rem;
+        }
+
+        .reliability-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .decision-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .infra-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .vision-node {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <canvas id="particles"></canvas>
+
+    <div class="grid"></div>
+
+    <div class="glow"></div>
+
+    <nav>
+      <div class="logo">LAHARI M</div>
+
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html" class="active">Projects</a>
+        <a href="experience.html">Experience</a>
+        <a href="achievements.html" class="active">Achievements</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </nav>
+
+    <section class="main-layout">
+      <!-- SIDEBAR -->
+
+      <aside class="sidebar">
+        <div class="project-mini-card">
+          <h2 class="mini-project-name">MedRoute</h2>
+
+          <p class="mini-project-desc">
+            Async emergency workflow orchestration system
+          </p>
+
+          <div class="sidebar-buttons">
+            <button class="switch-btn primary-switch" id="backendBtn">
+              Backend
+            </button>
+
+            <button class="switch-btn" id="themeBtn">Vision</button>
+          </div>
+        </div>
+
+        <div class="coming-soon">
+          <h3>Distributed Archive Platform</h3>
+
+          <p>
+            Retrieval infrastructure platform focused on async embedding
+            workflows, queue orchestration, and semantic indexing.
+          </p>
+        </div>
+      </aside>
+
+      <!-- CONTENT -->
+
+      <div class="content-panel">
+        <!-- BACKEND -->
+
+        <div id="backendSection">
+          <!-- HEADER -->
+
+          <div class="section">
+            <div class="section-label">BACKEND ARCHITECTURE</div>
+
+            <h1 class="section-title">
+              Async emergency routing infrastructure designed for workflow
+              continuity.
+            </h1>
+
+            <p class="section-desc">
+              MedRoute isolates heavy AI and geo-processing workloads from the
+              request lifecycle using queue orchestration, fault-tolerant
+              retries, workflow state protection, and recovery systems.
+            </p>
+          </div>
+
+          <!-- METRICS -->
+
+          <div class="section">
+            <div class="metrics-strip">
+              <div class="metric-pill">&lt;30ms enqueue</div>
+
+              <div class="metric-pill">3 retry attempts</div>
+
+              <div class="metric-pill">24hr idempotency TTL</div>
+
+              <div class="metric-pill">DLQ enabled</div>
+            </div>
+
+            <div class="latency-inline">
+              <div class="latency-chip">
+                <strong>Blocking AI:</strong> 800ms–2s
+              </div>
+
+              <div class="latency-arrow">→</div>
+
+              <div class="latency-chip fast-chip">
+                <strong>Queue-Based:</strong> &lt;30ms
+              </div>
+            </div>
+          </div>
+
+          <!-- FSM -->
+
+          <div class="section">
+            <div class="section-label">WORKFLOW STATE MANAGEMENT</div>
+
+            <p class="section-desc">
+              Guarded state transitions preserve operational consistency during
+              rerouting, retries, and recovery flows.
+            </p>
+
+            <div class="fsm-strip">
+              <div class="fsm-state-pill">CREATED</div>
+
+              <div class="fsm-connector">→</div>
+
+              <div class="fsm-state-pill">PROCESSING</div>
+
+              <div class="fsm-connector">→</div>
+
+              <div class="fsm-state-pill">MATCHED</div>
+
+              <div class="fsm-connector">→</div>
+
+              <div class="fsm-state-pill">SELECTED</div>
+
+              <div class="fsm-connector">→</div>
+
+              <div class="fsm-state-pill success-pill">ACCEPTED</div>
+            </div>
+
+            <div class="fsm-reroute">
+              <div class="fsm-state-pill reject-pill">REJECTED</div>
+
+              <div class="fsm-connector">→</div>
+
+              <div class="fsm-state-pill">MATCHED</div>
+
+              <div class="fsm-note">automatic reroute</div>
+            </div>
+          </div>
+
+          <!-- ARCHITECTURE -->
+
+          <div class="section">
+            <div class="section-label">BACKGROUND WORKER PIPELINE</div>
+
+            <p class="section-desc">
+              Heavy AI and geo-processing workloads execute asynchronously
+              outside the request lifecycle to preserve low API latency.
+            </p>
+
+            <div class="architecture-box">
+              <div class="architecture-flow">
+                <div class="flow-node">Emergency Request</div>
+
+                <div class="flow-arrow">↓</div>
+
+                <div class="flow-node">Async API Layer</div>
+
+                <div class="flow-arrow">↓</div>
+
+                <div class="flow-node">Redis Queue</div>
+
+                <div class="flow-arrow">↓</div>
+
+                <div class="worker-group">
+                  <div class="worker-title">Background Worker</div>
+
+                  <div class="worker-items">
+                    <div class="worker-item">LLM Triage</div>
+
+                    <div class="worker-item">Hospital Discovery</div>
+
+                    <div class="worker-item">Hospital Scoring</div>
+                  </div>
+                </div>
+
+                <div class="flow-arrow">↓</div>
+
+                <div class="flow-node">PostgreSQL</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RELIABILITY -->
+
+          <div class="section">
+            <div class="section-label">FAULT ISOLATION SYSTEMS</div>
+
+            <p class="section-desc">
+              Failure handling layers prevent external API instability from
+              interrupting emergency workflow continuity.
+            </p>
+
+            <div class="failure-box">
+              <div class="failure-flow">
+                <div class="failure-node">LLM Failure</div>
+
+                <div class="failure-arrow">→</div>
+
+                <div class="failure-node">Circuit Breaker Opens</div>
+
+                <div class="failure-arrow">→</div>
+
+                <div class="failure-node">Fallback Routing</div>
+
+                <div class="failure-arrow">→</div>
+
+                <div class="failure-node success-node">Workflow Continues</div>
+              </div>
+            </div>
+
+            <br />
+
+            <div class="reliability-grid">
+              <div class="reliability-card">
+                <div class="reliability-title">Circuit Breaker</div>
+
+                <div class="reliability-text">
+                  3 failures
+                  <br />
+                  30s cooldown
+                  <br />
+                  half-open recovery
+                </div>
+              </div>
+
+              <div class="reliability-card">
+                <div class="reliability-title">Retries</div>
+
+                <div class="reliability-text">
+                  3 attempts
+                  <br />
+                  exponential backoff
+                  <br />
+                  transient recovery
+                </div>
+              </div>
+
+              <div class="reliability-card">
+                <div class="reliability-title">DLQ</div>
+
+                <div class="reliability-text">
+                  failed jobs isolated
+                  <br />
+                  replay support
+                  <br />
+                  structured logs
+                </div>
+              </div>
+
+              <div class="reliability-card">
+                <div class="reliability-title">Idempotency</div>
+
+                <div class="reliability-text">
+                  Redis TTL protection
+                  <br />
+                  duplicate prevention
+                  <br />
+                  retry-safe workflows
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- LOGS -->
+
+          <div class="section">
+            <div class="section-label">OPERATIONAL OBSERVABILITY</div>
+
+            <p class="section-desc">
+              Structured worker logs provide operational visibility into routing
+              workflows, retries, rerouting, and processing stages.
+            </p>
+
+            <div class="logs-terminal">
+              <div class="terminal-line">
+                event=processing_started request_id=93F2
+              </div>
+
+              <div class="terminal-line">
+                event=triage_completed severity=critical
+              </div>
+
+              <div class="terminal-line">
+                event=hospital_ranking_completed hospitals=7
+              </div>
+
+              <div class="terminal-line">
+                event=reroute_triggered previous_hospital=rejected
+              </div>
+
+              <div class="terminal-line">
+                event=processing_completed latency=1244ms
+              </div>
+            </div>
+          </div>
+
+          <!-- CAROUSEL -->
+
+          <div class="section">
+            <div class="section-label">REAL WORKFLOW SNAPSHOTS</div>
+
+            <p class="section-desc">
+              Operational API responses and workflow execution captured during
+              live backend testing.
+            </p>
+
+            <div class="carousel-wrapper">
+              <div class="carousel-container">
+                <div class="carousel-track" id="carouselTrack">
+                  <!-- 1 -->
+
+                  <div class="carousel-card">
+                    <div class="carousel-image">
+                      Insert Postman Screenshot Here
+                    </div>
+
+                    <div class="carousel-content">
+                      <h3>Emergency Creation</h3>
+
+                      <p>
+                        Creates emergency request and immediately enqueues
+                        workflow without blocking AI processing.
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- 2 -->
+
+                  <div class="carousel-card">
+                    <div class="carousel-image">
+                      Insert Worker Log Screenshot Here
+                    </div>
+
+                    <div class="carousel-content">
+                      <h3>Worker Logs</h3>
+
+                      <p>
+                        Background worker processes AI triage, hospital
+                        discovery, and ranking asynchronously.
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- 3 -->
+
+                  <div class="carousel-card">
+                    <div class="carousel-image">
+                      Insert Matching Screenshot Here
+                    </div>
+
+                    <div class="carousel-content">
+                      <h3>Hospital Matching</h3>
+
+                      <p>
+                        Geo-aware ranking engine evaluates nearby hospitals
+                        using severity, specialization, ICU requirement, and
+                        distance.
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- 4 -->
+
+                  <div class="carousel-card">
+                    <div class="carousel-image">
+                      Insert Selection Screenshot Here
+                    </div>
+
+                    <div class="carousel-content">
+                      <h3>Hospital Selection</h3>
+
+                      <p>
+                        Selected hospital receives emergency context before
+                        patient arrival.
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- 5 -->
+
+                  <div class="carousel-card">
+                    <div class="carousel-image">
+                      Insert Rerouting Screenshot Here
+                    </div>
+
+                    <div class="carousel-content">
+                      <h3>Automatic Rerouting</h3>
+
+                      <p>
+                        Rejected emergencies automatically reroute to the next
+                        ranked hospital without restarting workflow state.
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- 6 -->
+
+                  <div class="carousel-card">
+                    <div class="carousel-image">
+                      Insert Metrics Screenshot Here
+                    </div>
+
+                    <div class="carousel-content">
+                      <h3>Metrics Endpoint</h3>
+
+                      <p>
+                        Operational metrics expose queue health, retries,
+                        failures, and workflow processing visibility.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="carousel-buttons">
+                <button class="carousel-btn" id="prevBtn">←</button>
+
+                <button class="carousel-btn" id="nextBtn">→</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- DECISIONS -->
+
+          <div class="section">
+            <div class="section-label">ENGINEERING DECISIONS</div>
+
+            <p class="section-desc">
+              Architectural choices focused on workflow reliability, operational
+              simplicity, and low-latency request handling.
+            </p>
+
+            <div class="decision-grid">
+              <div class="decision-card">
+                <h3>Why Async?</h3>
+
+                <p>
+                  Prevent AI latency from blocking synchronous API response
+                  handling during emergency processing.
+                </p>
+              </div>
+
+              <div class="decision-card">
+                <h3>Why Redis?</h3>
+
+                <p>
+                  Lightweight queue coordination with low operational complexity
+                  for current infrastructure scale.
+                </p>
+              </div>
+
+              <div class="decision-card">
+                <h3>Why FSM?</h3>
+
+                <p>
+                  Preserve workflow consistency by blocking invalid transitions
+                  during rerouting and retries.
+                </p>
+              </div>
+
+              <div class="decision-card">
+                <h3>Why Fallback Routing?</h3>
+
+                <p>
+                  Emergency workflows cannot pause during AI or provider
+                  failures, requiring continuity guarantees.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VISION -->
+
+        <div class="theme-section" id="themeSection">
+          <div class="section">
+            <div class="section-label">EMERGENCY COORDINATION VISION</div>
+
+            <h1 class="section-title">
+              Rethinking emergency response beyond traditional ambulance-first
+              workflows.
+            </h1>
+          </div>
+
+          <!-- PROBLEM -->
+
+          <div class="vision-block">
+            <h3>The Problem With Traditional Emergency Flow</h3>
+
+            <p>
+              In many emergencies, families do not wait for an ambulance first.
+
+              <br /><br />
+
+              They immediately begin moving toward the hospital using their own
+              vehicle to save time.
+            </p>
+
+            <ul>
+              <li>traffic systems are unaware</li>
+              <li>nearby drivers cannot identify the emergency</li>
+              <li>hospitals are unprepared</li>
+              <li>ambulances operate independently</li>
+              <li>coordination becomes fragmented</li>
+            </ul>
+
+            <br />
+
+            <p>Critical minutes are lost during communication and routing.</p>
+          </div>
+
+          <!-- MODEL -->
+
+          <div class="vision-block">
+            <h3>MedRoute’s Coordination Model</h3>
+
+            <p>
+              Instead of waiting for emergency systems sequentially, MedRoute
+              explores a coordinated movement model.
+            </p>
+
+            <ul>
+              <li>ambulance dispatch occurs simultaneously</li>
+              <li>hospitals prepare in advance</li>
+              <li>routing intelligence continuously adapts</li>
+              <li>
+                emergency coordination remains active throughout the journey
+              </li>
+            </ul>
+          </div>
+
+          <!-- FLOW -->
+
+          <div class="vision-block">
+            <h3>Coordinated Emergency Orchestration</h3>
+
+            <div class="vision-flow">
+              <div class="vision-node">Emergency Detected</div>
+
+              <div class="vision-arrow">↓</div>
+
+              <div class="vision-split">
+                <div class="vision-node">Patient Begins Movement</div>
+
+                <div class="vision-node">Ambulance Dispatched</div>
+              </div>
+
+              <div class="vision-arrow">↓</div>
+
+              <div class="vision-node">Dynamic Meetup Coordination</div>
+
+              <div class="vision-arrow">↓</div>
+
+              <div class="vision-node">Patient Transfer</div>
+
+              <div class="vision-arrow">↓</div>
+
+              <div class="vision-node">Traffic-Aware Hospital Routing</div>
+
+              <div class="vision-arrow">↓</div>
+
+              <div class="vision-node">Hospital Prepared Before Arrival</div>
+            </div>
+          </div>
+
+          <!-- INFRA -->
+
+          <div class="vision-block">
+            <h3>Future Infrastructure Exploration</h3>
+
+            <div class="infra-grid">
+              <div class="infra-card">traffic-aware routing</div>
+
+              <div class="infra-card">emergency visibility systems</div>
+
+              <div class="infra-card">signal coordination</div>
+
+              <div class="infra-card">route synchronization</div>
+
+              <div class="infra-card">city-scale emergency orchestration</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      /* TOGGLE */
+
+      const backendBtn = document.getElementById("backendBtn");
+      const themeBtn = document.getElementById("themeBtn");
+
+      const backendSection = document.getElementById("backendSection");
+      const themeSection = document.getElementById("themeSection");
+
+      backendBtn.onclick = () => {
+        backendSection.style.display = "block";
+        themeSection.style.display = "none";
+
+        backendBtn.classList.add("primary-switch");
+        themeBtn.classList.remove("primary-switch");
+      };
+
+      themeBtn.onclick = () => {
+        backendSection.style.display = "none";
+        themeSection.style.display = "block";
+
+        themeBtn.classList.add("primary-switch");
+        backendBtn.classList.remove("primary-switch");
+      };
+
+      /* CAROUSEL */
+
+      const track = document.getElementById("carouselTrack");
+
+      const nextBtn = document.getElementById("nextBtn");
+      const prevBtn = document.getElementById("prevBtn");
+
+      const cards = document.querySelectorAll(".carousel-card");
+
+      let index = 0;
+
+      function updateCarousel() {
+        track.style.transform = `translateX(-${index * 100}%)`;
+      }
+
+      nextBtn.addEventListener("click", () => {
+        index++;
+
+        if (index >= cards.length) {
+          index = 0;
+        }
+
+        updateCarousel();
+      });
+
+      prevBtn.addEventListener("click", () => {
+        index--;
+
+        if (index < 0) {
+          index = cards.length - 1;
+        }
+
+        updateCarousel();
+      });
+
+      /* PARTICLES */
+
+      const canvas = document.getElementById("particles");
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      let particlesArray = [];
+
+      class Particle {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+
+          this.size = Math.random() * 2;
+
+          this.speedX = (Math.random() - 0.5) * 0.25;
+          this.speedY = (Math.random() - 0.5) * 0.25;
+        }
+
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+
+          if (this.x > canvas.width) this.x = 0;
+          if (this.x < 0) this.x = canvas.width;
+
+          if (this.y > canvas.height) this.y = 0;
+          if (this.y < 0) this.y = canvas.height;
+        }
+
+        draw() {
+          ctx.fillStyle = "rgba(125,211,252,0.7)";
+
+          ctx.beginPath();
+
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+
+          ctx.fill();
+        }
+      }
+
+      function init() {
+        particlesArray = [];
+
+        for (let i = 0; i < 60; i++) {
+          particlesArray.push(new Particle());
+        }
+      }
+
+      function connectParticles() {
+        for (let a = 0; a < particlesArray.length; a++) {
+          for (let b = a; b < particlesArray.length; b++) {
+            let dx = particlesArray[a].x - particlesArray[b].x;
+            let dy = particlesArray[a].y - particlesArray[b].y;
+
+            let distance = dx * dx + dy * dy;
+
+            if (distance < 10000) {
+              ctx.strokeStyle = "rgba(125,211,252,0.04)";
+
+              ctx.lineWidth = 1;
+
+              ctx.beginPath();
+
+              ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+
+              ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+
+              ctx.stroke();
+            }
+          }
+        }
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        particlesArray.forEach((particle) => {
+          particle.update();
+          particle.draw();
+        });
+
+        connectParticles();
+
+        requestAnimationFrame(animate);
+      }
+
+      init();
+      animate();
+
+      /* CURSOR */
+    </script>
+  </body>
+  <!-- CHATBOT -->
+
+  <div id="chatbot-container"></div>
+
+  <script>
+    fetch("chatbot/chatbot.html")
+      .then((response) => response.text())
+      .then((data) => {
+        document.getElementById("chatbot-container").innerHTML = data;
+
+        const script = document.createElement("script");
+
+        script.src = "chatbot/chatbot.js";
+
+        document.body.appendChild(script);
+      });
+  </script>
+  <script>
+    /* SESSION ID */
+
+    let sessionId = localStorage.getItem("session_id");
+
+    if (!sessionId) {
+      sessionId = Math.random().toString(36).substring(2);
+
+      localStorage.setItem("session_id", sessionId);
+    }
+
+    /* START TIME */
+
+    const startTime = Date.now();
+
+    /* SEND ANALYTICS */
+
+    window.addEventListener("beforeunload", async () => {
+      const duration = Math.floor((Date.now() - startTime) / 1000);
+
+      await fetch("http://127.0.0.1:8000/track", {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          session_id: sessionId,
+
+          page: "home",
+
+          duration: `${duration}s`,
+
+          device: navigator.userAgent,
+
+          country: "unknown",
+        }),
+      });
+    });
+  </script>
+</html>
