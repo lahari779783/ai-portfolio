@@ -84,17 +84,20 @@ async function sendMessage() {
   createTyping();
 
   try {
-    const response = await fetch("https://lahari-portfolio-backend.onrender.com", {
-      method: "POST",
+    const response = await fetch(
+      "https://lahari-portfolio-backend.onrender.com/chat",
+      {
+        method: "POST",
 
-      headers: {
-        "Content-Type": "application/json",
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          message: message,
+        }),
       },
-
-      body: JSON.stringify({
-        message: message,
-      }),
-    });
+    );
 
     const data = await response.json();
 
